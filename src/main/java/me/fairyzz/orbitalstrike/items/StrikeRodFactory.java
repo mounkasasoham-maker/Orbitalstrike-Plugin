@@ -27,10 +27,10 @@ public class StrikeRodFactory {
 
         assert meta != null;
         meta.setDisplayName(displayNameFor(type));
-        meta.setCustomModelData(CUSTOM_MODEL_DATA);
+meta.setCustomModelData(CUSTOM_MODEL_DATA);
+meta.setMaxStackSize(99);
 
-        item.setItemMeta(meta);
-        if (material == Material.FISHING_ROD) item.setDurability((short) 60);
+item.setItemMeta(meta);
         return item;
     }
 
