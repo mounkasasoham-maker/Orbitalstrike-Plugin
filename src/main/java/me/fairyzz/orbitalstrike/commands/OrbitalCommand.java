@@ -10,6 +10,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -122,12 +123,24 @@ public class OrbitalCommand implements CommandExecutor, TabCompleter {
                 sender.sendMessage("§cInvalid coordinates!");
             }
         } else {
-            if (args.length != 3) {
-                sender.sendMessage("§cUsage: /orbital give <player> " + type);
-                return true;
-            }
-            target.getInventory().addItem(rodFactory.create(type));
-            sender.sendMessage("§aGave " + type + " rod to " + target.getName());
+            int amount = 1;
+
+if (args.length >= 4) {
+    try {
+        amount = Integer.parseInt(args[3]);
+        amount = Math.max(1, Math.min(99, amount));
+    } catch (NumberFormatException e) {
+        sender.sendMessage("§cAmount must be a number from 1 to 99.");
+        return true;
+    }
+}
+
+ItemStack orbital = rodFactory.create(type);
+orbital.setAmount(amount);
+
+target.getInventory().addItem(orbital);
+
+sender.sendMessage("§aGave " + amount + "x " + type + " orbital(s) to " + target.getName());
         }
 
         return true;
